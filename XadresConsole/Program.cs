@@ -1,4 +1,5 @@
 ﻿using System;
+using XadresConsole.Taboleiro; 
 
 namespace XadresConsole
 {
@@ -6,7 +7,8 @@ namespace XadresConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Posicao posicao = new Posicao(3, 4); 
+            Console.WriteLine(posicao);
         }
     }
 }
