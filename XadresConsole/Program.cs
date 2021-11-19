@@ -7,11 +7,14 @@ namespace XadresConsole
     {
         static void Main(string[] args)
         {
-            Posicao posicao = new Posicao(3, 4); 
-            Console.WriteLine(posicao);
 
-            Taboleiro taboleiro = new Taboleiro(8, 9);
-            Console.ReadLine(); 
+            Taboleiro taboleiro = new Taboleiro(8, 8);
+          
+            Tela.ImprimirTaboleiro(taboleiro);
+
+            Console.ReadLine();
+
+
              
             
         }

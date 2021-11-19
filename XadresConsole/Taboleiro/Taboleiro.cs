@@ -20,5 +20,11 @@ namespace XadresConsole.taboleiro
 
             _pecas = new Peca[Linhas, Colunas]; 
         }
+
+        public Peca TabueliroJogo(int linha, int coluna)
+        {
+
+            return _pecas[linha, coluna]; 
+        }
     }
 }
