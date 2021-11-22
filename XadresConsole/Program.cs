@@ -3,6 +3,7 @@ using XadresConsole.taboleiro;
 using XadresConsole.Xadres;
 using XadresConsole.taboleiro.Enums;
 
+
 namespace XadresConsole
 {
     class Program
@@ -12,23 +13,26 @@ namespace XadresConsole
 
             Taboleiro taboleiro = new Taboleiro(8, 8);
 
-            try
-            {
+            //try
+            //{
 
-                taboleiro.ColocarPeca(new Torre(Cor.Preta, taboleiro), new Posicao(0, 0));
-                taboleiro.ColocarPeca(new Torre(Cor.Preta, taboleiro), new Posicao(1, 3));
-                taboleiro.ColocarPeca(new Rei(Cor.Preta, taboleiro), new Posicao(0, 8));
+            //    taboleiro.ColocarPeca(new Torre(Cor.Preta, taboleiro), new Posicao(0, 0));
+            //    taboleiro.ColocarPeca(new Torre(Cor.Preta, taboleiro), new Posicao(1, 3));
+            //    taboleiro.ColocarPeca(new Rei(Cor.Preta, taboleiro), new Posicao(0, 8));
 
-                Tela.ImprimirTaboleiro(taboleiro);
+            //    Tela.ImprimirTaboleiro(taboleiro);
 
-                Console.ReadLine();
+            //    Console.ReadLine();
 
 
-            }
-            catch (TaboleiroExcepton e)
-            {
-                Console.WriteLine("Erro: " + e.Message);
-            }
+            //}
+            //catch (TaboleiroExcepton e)
+            //{
+            //    Console.WriteLine("Erro: " + e.Message);
+            //}
+
+            PosicaoXadrez xadrez = new PosicaoXadrez('a', 8);
+            Console.WriteLine(xadrez.ToPosicao());
 
         }
     }
