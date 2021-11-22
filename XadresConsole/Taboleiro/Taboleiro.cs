@@ -21,17 +21,48 @@ namespace XadresConsole.taboleiro
             _pecas = new Peca[Linhas, Colunas]; 
         }
 
-        public Peca TabueliroJogo(int linha, int coluna)
+        public Peca TabuleiroJogo(int linha, int coluna)
         {
 
             return _pecas[linha, coluna]; 
         }
 
+        public Peca TabuleiroJogo(Posicao posicao)
+        {
+            return _pecas[posicao.Linha, posicao.Coluna]; 
+        }
+
+        public bool ExistePeca(Posicao posicao)
+        {
+            ValidarPosicao(posicao); 
+            return TabuleiroJogo(posicao) != null; 
+        }
+
         public void ColocarPeca(Peca peca, Posicao posicao)
         {
+            if (ExistePeca(posicao))
+            {
+                throw new TaboleiroExcepton("Já Existe peça nesta posição!"); 
+            }
             _pecas[posicao.Linha, posicao.Coluna] = peca;
-
             peca.Posicao = posicao; 
+        }
+
+        public bool PosicaoValida(Posicao posicao)
+        {
+            if(posicao.Linha<0 || posicao.Linha >= Linhas || posicao.Coluna <0 ||posicao.Coluna >= Colunas)
+            {
+                return false; 
+            }
+            return true; 
+        }
+
+        public void ValidarPosicao(Posicao posicao)
+        {
+            if (!PosicaoValida(posicao))
+            {
+                throw new TaboleiroExcepton("Posicao Invalida"); 
+            }
         }
     }
 }

@@ -15,13 +15,13 @@ namespace XadresConsole
             {
                 for (int j = 0; j < taboleiro.Colunas; j++)
                 {
-                    if (taboleiro.TabueliroJogo(i, j) == null)
+                    if (taboleiro.TabuleiroJogo(i, j) == null)
                     {
                         Console.Write("- ");
                     }
                     else
                     {
-                        Console.Write(taboleiro.TabueliroJogo(i, j) + " ");
+                        Console.Write(taboleiro.TabuleiroJogo(i, j) + " ");
                     }
 
                 }
