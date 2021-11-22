@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XadresConsole.taboleiro;
+using XadresConsole.taboleiro.Enums;
 
 namespace XadresConsole
 {
@@ -13,6 +14,7 @@ namespace XadresConsole
         {
             for (int i = 0; i < taboleiro.Linhas; i++)
             {
+                Console.Write(8 - i + " ");
                 for (int j = 0; j < taboleiro.Colunas; j++)
                 {
                     if (taboleiro.TabuleiroJogo(i, j) == null)
@@ -21,11 +23,30 @@ namespace XadresConsole
                     }
                     else
                     {
-                        Console.Write(taboleiro.TabuleiroJogo(i, j) + " ");
+                        ImprimirPeca(taboleiro.TabuleiroJogo(i, j)); 
+                        Console.Write(" ");
                     }
 
                 }
                 Console.WriteLine();
+            }
+            Console.WriteLine("  a b c d e f g h");
+        }
+
+        public static void ImprimirPeca(Peca peca)
+        {
+            if (peca.Cor == Cor.Branca)
+            {
+                Console.Write(peca);
+            }
+            else
+            {
+                ConsoleColor aux = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(peca);
+
+                Console.ForegroundColor = aux;
+
             }
         }
     }
