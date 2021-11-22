@@ -14,9 +14,9 @@ namespace XadresConsole.taboleiro
         public int QtdMoviemento { get; protected set; }
         public Taboleiro Taboleiro { get; protected set; }
 
-        public Peca(Posicao posicao, Cor cor, Taboleiro taboleiro)
+        public Peca(Cor cor, Taboleiro taboleiro)
         {
-            Posicao = posicao;
+            Posicao = null;
             Cor = cor;
             Taboleiro = taboleiro;
             QtdMoviemento = 0; 
