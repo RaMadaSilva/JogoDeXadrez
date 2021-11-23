@@ -48,6 +48,20 @@ namespace XadresConsole.taboleiro
             peca.Posicao = posicao; 
         }
 
+        public Peca RemoverPeca(Posicao posicao)
+        {
+            if(TabuleiroJogo(posicao) == null)
+            {
+                return null; 
+            }
+
+            Peca aux = TabuleiroJogo(posicao);
+            aux.Posicao = null;
+            _pecas[posicao.Linha, posicao.Coluna] = null;
+
+            return aux; 
+        }
+
         public bool PosicaoValida(Posicao posicao)
         {
             if(posicao.Linha<0 || posicao.Linha >= Linhas || posicao.Coluna <0 ||posicao.Coluna >= Colunas)

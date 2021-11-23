@@ -8,18 +8,19 @@ namespace XadresConsole.taboleiro
 {
     class Posicao
     {
-        public int Coluna { get; set; }
         public int Linha { get; set; }
+        public int Coluna { get; set; }
 
-        public Posicao(int coluna, int linha)
+        public Posicao(int linha, int coluna)
         {
-            Coluna = coluna;
             Linha = linha;
+            Coluna = coluna;
+            
         }
 
         public override string ToString()
         {
-            return Coluna + ", " + Linha; 
+            return Linha + ", " + Coluna; 
         }
     }
 }

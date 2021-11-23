@@ -21,5 +21,10 @@ namespace XadresConsole.taboleiro
             Taboleiro = taboleiro;
             QtdMoviemento = 0; 
         }
+
+        public void IncrementarMovimento()
+        {
+            QtdMoviemento++; 
+        }
     }
 }

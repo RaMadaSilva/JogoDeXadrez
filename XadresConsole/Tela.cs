@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XadresConsole.taboleiro;
 using XadresConsole.taboleiro.Enums;
+using XadresConsole.Xadres; 
 
 namespace XadresConsole
 {
@@ -48,6 +49,16 @@ namespace XadresConsole
                 Console.ForegroundColor = aux;
 
             }
+        }
+
+        public static PosicaoXadrez LerPosicao()
+        {
+            
+            string s = Console.ReadLine();
+            char colina = s[0];
+            int linha = int.Parse(s[1] + "");
+
+            return new PosicaoXadrez(colina, linha); 
         }
     }
 }

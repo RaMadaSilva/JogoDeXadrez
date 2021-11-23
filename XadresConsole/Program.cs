@@ -11,20 +11,27 @@ namespace XadresConsole
         static void Main(string[] args)
         {
 
-            Taboleiro taboleiro = new Taboleiro(8, 8);
+            PartidaXadres partida = new PartidaXadres();
 
             try
             {
+                while (!partida.Terminada)
+                {
+                    Console.Clear();
+                    Tela.ImprimirTaboleiro(partida.Taboleiro);
+                    Console.WriteLine();
 
-                taboleiro.ColocarPeca(new Torre(Cor.Preta, taboleiro), new Posicao(0, 0));
-                taboleiro.ColocarPeca(new Torre(Cor.Preta, taboleiro), new Posicao(1, 3));
-                taboleiro.ColocarPeca(new Rei(Cor.Preta, taboleiro), new Posicao(0, 5));
+                    Console.Write("Origem: ");
+                    Posicao origem = Tela.LerPosicao().ToPosicao();
 
-                taboleiro.ColocarPeca(new Rei(Cor.Branca, taboleiro), new Posicao(1, 5));
+                    Console.Write("Destino: ");
+                    Posicao destino = Tela.LerPosicao().ToPosicao();
 
-                Tela.ImprimirTaboleiro(taboleiro);
+                    partida.ExecutarMovimento(origem, destino); 
 
-                Console.ReadLine();
+                }
+
+
 
 
             }
@@ -33,7 +40,7 @@ namespace XadresConsole
                 Console.WriteLine("Erro: " + e.Message);
             }
 
-            //PosicaoXadrez xadrez = new PosicaoXadrez('a', 8);
+            //PosicaoXadrez xadrez = new PosicaoXadrez('c', 2);
             //Console.WriteLine(xadrez.ToPosicao());
 
         }
