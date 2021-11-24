@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XadresConsole.taboleiro;
-using XadresConsole.taboleiro.Enums; 
+using XadresConsole.Mesa;
+using XadresConsole.Mesa.Enums; 
 
 namespace XadresConsole.Xadres
 {

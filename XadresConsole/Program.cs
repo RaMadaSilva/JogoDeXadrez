@@ -1,7 +1,7 @@
 ﻿using System;
-using XadresConsole.taboleiro;
+using XadresConsole.Mesa;
 using XadresConsole.Xadres;
-using XadresConsole.taboleiro.Enums;
+using XadresConsole.Mesa.Enums;
 
 
 namespace XadresConsole
@@ -24,15 +24,18 @@ namespace XadresConsole
                     Console.Write("Origem: ");
                     Posicao origem = Tela.LerPosicao().ToPosicao();
 
+                    bool[,] posicoesPossiveis = partida.Taboleiro.TabuleiroJogo(origem).MovimentosPossiveis(origem); 
+
+                    Console.Clear();
+                    Tela.ImprimirTaboleiro(partida.Taboleiro, posicoesPossiveis);
+
+                    Console.WriteLine();
                     Console.Write("Destino: ");
                     Posicao destino = Tela.LerPosicao().ToPosicao();
 
                     partida.ExecutarMovimento(origem, destino); 
 
                 }
-
-
-
 
             }
             catch (TaboleiroExcepton e)

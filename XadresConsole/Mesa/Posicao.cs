@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XadresConsole.taboleiro
+namespace XadresConsole.Mesa
 {
     class Posicao
     {
@@ -16,6 +16,12 @@ namespace XadresConsole.taboleiro
             Linha = linha;
             Coluna = coluna;
             
+        }
+
+        public void DefinirValores(int linha, int coluna)
+        {
+            Linha = linha;
+            Coluna = coluna; 
         }
 
         public override string ToString()

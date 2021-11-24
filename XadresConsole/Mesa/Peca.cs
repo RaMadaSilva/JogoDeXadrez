@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XadresConsole.taboleiro.Enums; 
+using XadresConsole.Mesa.Enums; 
 
-namespace XadresConsole.taboleiro
+namespace XadresConsole.Mesa
 {
-    class Peca
+    abstract class  Peca
     {
         public Posicao Posicao { get; set; }
         public Cor Cor { get; protected set; }
         public int QtdMoviemento { get; protected set; }
         public Taboleiro Taboleiro { get; protected set; }
 
-        public Peca(Cor cor, Taboleiro taboleiro)
+        public Peca(Cor cor, Taboleiro tab)
         {
             Posicao = null;
             Cor = cor;
-            Taboleiro = taboleiro;
+            Taboleiro = tab;
             QtdMoviemento = 0; 
         }
 
@@ -26,5 +26,16 @@ namespace XadresConsole.taboleiro
         {
             QtdMoviemento++; 
         }
+
+
+        public bool PodeMover(Posicao pos)
+        {
+            bool move; 
+            Peca p = Taboleiro.TabuleiroJogo(pos);
+            move = (p == null || p.Cor != Cor); 
+            return move ;
+        }
+
+        public abstract bool[,] MovimentosPossiveis(Posicao posicao); 
     }
 }
