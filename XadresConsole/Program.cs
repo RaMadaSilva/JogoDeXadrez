@@ -21,11 +21,9 @@ namespace XadresConsole
                     {
 
                         Console.Clear();
-                        Tela.ImprimirTaboleiro(partida.Taboleiro);
-                        Console.WriteLine();
+                        Tela.ImprimirPartida(partida); 
 
-                        Console.WriteLine("Turno: " + partida.Turno);
-                        Console.WriteLine("Aguardando Jogada: " + partida.JogadorActual);
+
 
                         Console.Write("Origem: ");
                         Posicao origem = Tela.LerPosicao().ToPosicao();

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XadresConsole.Mesa;
 using XadresConsole.Mesa.Enums;
 using XadresConsole.Xadres;
@@ -11,6 +8,49 @@ namespace XadresConsole
 {
     class Tela
     {
+
+        public static void ImprimirPartida(PartidaXadres partida)
+        {
+
+            Tela.ImprimirTaboleiro(partida.Taboleiro);
+            Console.WriteLine();
+
+            ImprimirPecasCapturadas(partida); 
+
+            Console.WriteLine("Turno: " + partida.Turno);
+            Console.WriteLine("Aguardando Jogada: " + partida.JogadorActual);
+        }
+
+        public static void ImprimirPecasCapturadas(PartidaXadres partida)
+        {
+            Console.WriteLine("Peças Capturadas: ");
+            Console.Write("Brancas: ");
+            ImprimirConjunto(partida.PecasCapturadas(Cor.Branca));
+            Console.WriteLine();
+
+            Console.Write("Pretas: ");
+            ConsoleColor color = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow; 
+            ImprimirConjunto(partida.PecasCapturadas(Cor.Preta));
+            Console.ForegroundColor = color; 
+            Console.WriteLine();
+            Console.WriteLine();
+
+        }
+
+        private static void ImprimirConjunto(HashSet<Peca> pecas)
+        {
+ 
+            Console.Write("[ ");
+            foreach(var capturada in pecas)
+            {
+
+            Console.Write(capturada + " ");
+            }
+            Console.Write(" ]");
+            
+        }
+
         public static void ImprimirTaboleiro(Taboleiro taboleiro)
         {
             for (int i = 0; i < taboleiro.Linhas; i++)
