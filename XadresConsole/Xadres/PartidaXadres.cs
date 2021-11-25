@@ -6,16 +6,16 @@ namespace XadresConsole.Xadres
 {
     class PartidaXadres
     {
-        private int _turno;
-        private Cor _jogadorActual;
+        public int Turno { get; private set;  }
+        public Cor JogadorActual { get; private set; }
         public Taboleiro  Taboleiro{ get; private set; }
         public bool Terminada { get; private set;  }
 
         public PartidaXadres()
         {
             Taboleiro = new Taboleiro(8, 8);
-            _turno = 1;
-            _jogadorActual = Cor.Branca;
+            Turno = 1;
+            JogadorActual = Cor.Branca;
             ColocarPeca();
             Terminada = false; 
         }
@@ -47,6 +47,48 @@ namespace XadresConsole.Xadres
             Taboleiro.ColocarPeca(peca, destino); 
         }
 
-       
+        public void RealizaJogada(Posicao origem, Posicao destino)
+        {
+            ExecutarMovimento(origem, destino);
+            Turno++;
+            MudaJogador(); 
+
+        }
+
+        public void ValidarPosicaoOrigem(Posicao pos)
+        {
+            if(Taboleiro.TabuleiroJogo(pos)== null)
+            {
+                throw new TaboleiroExcepton("Não existe peça na posição origem escolhida!"); 
+            }
+            if(JogadorActual != Taboleiro.TabuleiroJogo(pos).Cor)
+            {
+                throw new TaboleiroExcepton("A peça de Origem escolhida não é tua!"); 
+            }
+            if (!Taboleiro.TabuleiroJogo(pos).ExisteMovimetosPossiveis(pos))
+            {
+                throw new TaboleiroExcepton("Não há movimentos possivies para a peça de origem escolhida!"); 
+            }
+        }
+
+        public void ValidarPosicaoDestino(Posicao origem, Posicao destino)
+        {
+            if (!Taboleiro.TabuleiroJogo(origem).PodeMoverPara(destino))
+            {
+                throw new TaboleiroExcepton("Posição Invalida!"); 
+            }
+        }
+
+        private void MudaJogador()
+        {
+            if(JogadorActual == Cor.Branca)
+            {
+                JogadorActual = Cor.Preta;
+            }
+            else
+            {
+                JogadorActual = Cor.Branca; 
+            }
+        }
     }
 }

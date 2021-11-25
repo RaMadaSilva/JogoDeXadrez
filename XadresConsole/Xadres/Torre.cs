@@ -15,61 +15,61 @@ namespace XadresConsole.Xadres
 
         }
 
-        public override bool[,] MovimentosPossiveis(Posicao posicao)
+        public override bool[,] MovimentosPossiveis()
         {
-            bool[,] movimentosPossiveisTorre = new bool[Taboleiro.Linhas, Taboleiro.Colunas];
+            bool[,] movimentosTorre = new bool[Taboleiro.Linhas, Taboleiro.Colunas];
 
-           // Posicao posicao = new Posicao(0, 0);
+           Posicao pos = new Posicao(0, 0);
 
             // acima 
-            posicao.DefinirValores(posicao.Linha - 1, posicao.Coluna);
-            while (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
+            while (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisTorre[posicao.Linha, posicao.Coluna] = true; 
-                if(Taboleiro.TabuleiroJogo(posicao)!=null && Taboleiro.TabuleiroJogo(posicao).Cor != Cor)
+                movimentosTorre[pos.Linha, pos.Coluna] = true; 
+                if(Taboleiro.TabuleiroJogo(pos)!=null && Taboleiro.TabuleiroJogo(pos).Cor != Cor)
                 {
                     break; 
                 }
-                posicao.Linha = posicao.Linha -1; 
+                pos.Linha = pos.Linha -1; 
             }
 
             // Baixo 
-            posicao.DefinirValores(posicao.Linha + 1, posicao.Coluna);
-            while (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
+            while (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisTorre[posicao.Linha, posicao.Coluna] = true;
-                if (Taboleiro.TabuleiroJogo(posicao) != null && Taboleiro.TabuleiroJogo(posicao).Cor != Cor)
+                movimentosTorre[pos.Linha, pos.Coluna] = true;
+                if (Taboleiro.TabuleiroJogo(pos) != null && Taboleiro.TabuleiroJogo(pos).Cor != Cor)
                 {
                     break;
                 }
-                posicao.Linha = posicao.Linha + 1 ;
+                pos.Linha = pos.Linha + 1 ;
             }
 
             // Direita 
-            posicao.DefinirValores(posicao.Linha, posicao.Coluna +1);
-            while (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha, Posicao.Coluna +1);
+            while (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisTorre[posicao.Linha, posicao.Coluna] = true;
-                if (Taboleiro.TabuleiroJogo(posicao) != null && Taboleiro.TabuleiroJogo(posicao).Cor != Cor)
+                movimentosTorre[pos.Linha, pos.Coluna] = true;
+                if (Taboleiro.TabuleiroJogo(pos) != null && Taboleiro.TabuleiroJogo(pos).Cor != Cor)
                 {
                     break;
                 }
-                posicao.Coluna = posicao.Coluna +1;
+                pos.Coluna = pos.Coluna +1;
             }
 
             // Esquerda 
-            posicao.DefinirValores(posicao.Linha, posicao.Coluna - 1);
-            while (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha, Posicao.Coluna - 1);
+            while (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisTorre[posicao.Linha, posicao.Coluna] = true;
-                if (Taboleiro.TabuleiroJogo(posicao) != null && Taboleiro.TabuleiroJogo(posicao).Cor != Cor)
+                movimentosTorre[pos.Linha, pos.Coluna] = true;
+                if (Taboleiro.TabuleiroJogo(pos) != null && Taboleiro.TabuleiroJogo(pos).Cor != Cor)
                 {
                     break;
                 }
-                posicao.Coluna = posicao.Coluna - 1;
+                pos.Coluna = pos.Coluna - 1;
             }
 
-            return movimentosPossiveisTorre; 
+            return movimentosTorre; 
         }
  
         public override string ToString()

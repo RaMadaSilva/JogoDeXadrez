@@ -11,81 +11,82 @@ namespace XadresConsole.Xadres
 
         }
 
-        public override bool[,] MovimentosPossiveis(Posicao posicao)
+        public override bool[,] MovimentosPossiveis()
         {
             bool[,] movimentosPossiveisRei = new bool[Taboleiro.Linhas, Taboleiro.Colunas];
 
-            //Posicao posicao = new Posicao(0, 0);
+            Posicao pos = new Posicao(0, 0);
 
             //  ao Norte  
-            posicao.DefinirValores(posicao.Linha - 1, posicao.Coluna);
+            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
 
-            if (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            if (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisRei[posicao.Linha, posicao.Coluna] = true;
+                movimentosPossiveisRei[pos.Linha, pos.Coluna] = true;
             }
 
-            posicao.DefinirValores(posicao.Linha + 1, posicao.Coluna);
+            //posicao.DefinirValores(posicao.Linha + 1, posicao.Coluna);
 
             // ao Sul   
-            posicao.DefinirValores(posicao.Linha + 1, posicao.Coluna);
-            if (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
+            if (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisRei[posicao.Linha, posicao.Coluna] = true;
+                movimentosPossiveisRei[pos.Linha, pos.Coluna] = true;
             }
 
-            posicao.DefinirValores(posicao.Linha -1, posicao.Coluna);
+            //posicao.DefinirValores(posicao.Linha -1, posicao.Coluna);
 
             // Ao Este  
-            posicao.DefinirValores(posicao.Linha, posicao.Coluna + 1);
-            if (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha, Posicao.Coluna + 1);
+            if (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisRei[posicao.Linha, posicao.Coluna] = true;
+                movimentosPossiveisRei[pos.Linha, pos.Coluna] = true;
             }
 
-            posicao.DefinirValores(posicao.Linha, posicao.Coluna -1); 
+            //posicao.DefinirValores(posicao.Linha, posicao.Coluna -1); 
 
             // ao Oeste  
-            posicao.DefinirValores(posicao.Linha, posicao.Coluna - 1);
-            if (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha, Posicao.Coluna - 1);
+            if (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisRei[posicao.Linha, posicao.Coluna] = true;
+                movimentosPossiveisRei[pos.Linha, pos.Coluna] = true;
             }
 
-            posicao.DefinirValores(posicao.Linha, posicao.Coluna + 1);
+            //posicao.DefinirValores(posicao.Linha, posicao.Coluna + 1);
 
             //  Ao Nordeste  
-            posicao.DefinirValores(posicao.Linha - 1, posicao.Coluna + 1);
-            if (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 1);
+            if (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisRei[posicao.Linha, posicao.Coluna] = true;
+                movimentosPossiveisRei[pos.Linha, pos.Coluna] = true;
             }
 
-            posicao.DefinirValores(posicao.Linha +1, posicao.Coluna -1);
+            //posicao.DefinirValores(posicao.Linha +1, posicao.Coluna -1);
 
 
             //  Ao Sudeste
-            posicao.DefinirValores(posicao.Linha + 1, posicao.Coluna + 1);
-            if (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 1);
+            if (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisRei[posicao.Linha, posicao.Coluna] = true;
+                movimentosPossiveisRei[pos.Linha, pos.Coluna] = true;
             }
 
-            posicao.DefinirValores(posicao.Linha -1, posicao.Coluna-1);
+            //posicao.DefinirValores(posicao.Linha -1, posicao.Coluna-1);
 
             //  Ao Sudoeste
-            posicao.DefinirValores(posicao.Linha + 1, posicao.Coluna - 1);
-            if (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 1);
+            if (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisRei[posicao.Linha, posicao.Coluna] = true;
+                movimentosPossiveisRei[pos.Linha, pos.Coluna] = true;
             }
 
-            posicao.DefinirValores(posicao.Linha - 1, posicao.Coluna + 1);
+            //posicao.DefinirValores(posicao.Linha - 1, posicao.Coluna + 1);
+
             //  Ao Noroeste
-            posicao.DefinirValores(posicao.Linha - 1, posicao.Coluna - 1);
-            if (Taboleiro.PosicaoValida(posicao) && PodeMover(posicao))
+            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 1);
+            if (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
-                movimentosPossiveisRei[posicao.Linha, posicao.Coluna] = true;
+                movimentosPossiveisRei[pos.Linha, pos.Coluna] = true;
             }
 
             return movimentosPossiveisRei;

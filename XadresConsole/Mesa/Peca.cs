@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XadresConsole.Mesa.Enums; 
 
 namespace XadresConsole.Mesa
@@ -36,6 +32,28 @@ namespace XadresConsole.Mesa
             return move ;
         }
 
-        public abstract bool[,] MovimentosPossiveis(Posicao posicao); 
+        public bool ExisteMovimetosPossiveis(Posicao pos)
+        {
+            bool[,] mat = MovimentosPossiveis();
+            for(int i=0; i<Taboleiro.Linhas; i++)
+            {
+                for(int j=0; j<Taboleiro.Colunas; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true; 
+                    }
+                }
+            }
+
+            return false; 
+        }
+
+        public bool PodeMoverPara(Posicao pos)
+        {
+            return MovimentosPossiveis()[pos.Linha, pos.Coluna]; 
+        }
+
+        public abstract bool[,] MovimentosPossiveis(); 
     }
 }
