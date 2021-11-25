@@ -19,6 +19,11 @@ namespace XadresConsole
 
             Console.WriteLine("Turno: " + partida.Turno);
             Console.WriteLine("Aguardando Jogada: " + partida.JogadorActual);
+
+            if (partida.Xeque)
+            {
+                Console.WriteLine("XEQUE !");
+            }
         }
 
         public static void ImprimirPecasCapturadas(PartidaXadres partida)

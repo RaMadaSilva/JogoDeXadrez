@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using XadresConsole.Mesa;
-using XadresConsole.Mesa.Enums; 
+using XadresConsole.Mesa.Enums;
 
 namespace XadresConsole.Xadres
 {
     class PartidaXadres
     {
-        public int Turno { get; private set;  }
+        public int Turno { get; private set; }
         public Cor JogadorActual { get; private set; }
-        public Taboleiro  Taboleiro{ get; private set; }
-        public bool Terminada { get; private set;  }
+        public Taboleiro Taboleiro { get; private set; }
+        public bool Terminada { get; private set; }
+
+        public bool Xeque { get; private set; }
 
         private HashSet<Peca> _pecas;
-        private HashSet<Peca> _pecasCapturadas; 
+        private HashSet<Peca> _pecasCapturadas;
 
         public PartidaXadres()
         {
@@ -21,24 +23,25 @@ namespace XadresConsole.Xadres
             Turno = 1;
             JogadorActual = Cor.Branca;
             _pecas = new HashSet<Peca>();
-            _pecasCapturadas = new HashSet<Peca>(); 
+            _pecasCapturadas = new HashSet<Peca>();
 
             ColocarPeca();
-            Terminada = false; 
+            Terminada = false;
+            Xeque = false;
         }
 
         public HashSet<Peca> PecasCapturadas(Cor cor)
         {
-            HashSet<Peca> aux = new HashSet<Peca>(); 
-            foreach(Peca peca in _pecasCapturadas)
+            HashSet<Peca> aux = new HashSet<Peca>();
+            foreach (Peca peca in _pecasCapturadas)
             {
-                if(peca.Cor == cor)
+                if (peca.Cor == cor)
                 {
-                    aux.Add(peca); 
+                    aux.Add(peca);
                 }
             }
 
-            return aux; 
+            return aux;
         }
 
         public HashSet<Peca> PecasEmJogo(Cor cor)
@@ -51,14 +54,14 @@ namespace XadresConsole.Xadres
                     aux.Add(peca);
                 }
             }
-            aux.ExceptWith(PecasCapturadas(cor)); 
+            aux.ExceptWith(PecasCapturadas(cor));
             return aux;
         }
 
         public void ColocarNovaPeca(char coluna, int linha, Peca peca)
         {
             Taboleiro.ColocarPeca(peca, new PosicaoXadrez(coluna, linha).ToPosicao());
-            _pecas.Add(peca); 
+            _pecas.Add(peca);
 
         }
 
@@ -81,40 +84,115 @@ namespace XadresConsole.Xadres
 
         }
 
-        public void ExecutarMovimento(Posicao origem, Posicao destino)
+        public Peca ExecutarMovimento(Posicao origem, Posicao destino)
         {
             Peca peca = Taboleiro.RemoverPeca(origem);
             peca.IncrementarMovimento();
             Peca pecaCapturada = Taboleiro.RemoverPeca(destino);
-            Taboleiro.ColocarPeca(peca, destino); 
+            Taboleiro.ColocarPeca(peca, destino);
 
-            if(pecaCapturada!= null)
+            if (pecaCapturada != null)
             {
-                _pecasCapturadas.Add(pecaCapturada); 
+                _pecasCapturadas.Add(pecaCapturada);
             }
+
+            return pecaCapturada;
+        }
+
+        private Cor Adversaria(Cor cor)
+        {
+            if (cor == Cor.Branca)
+            {
+                return Cor.Preta;
+            }
+            else
+            {
+                return Cor.Branca;
+            }
+        }
+
+        private Peca PecaRei(Cor cor)
+        {
+            foreach (Peca peca in PecasEmJogo(cor))
+            {
+                if (peca is Rei)
+                {
+                    return peca;
+                }
+            }
+            return null;
+        }
+
+        public bool EstaEmXeque(Cor cor)
+        {
+            Peca R = PecaRei(cor);
+
+            if (R == null)
+            {
+                throw new TaboleiroExcepton("Não tem rei da cor " + cor + "no taboleiro");
+            }
+
+            foreach (Peca x in PecasEmJogo(Adversaria(cor)))
+            {
+
+                bool[,] mat = x.MovimentosPossiveis();
+
+                if (mat[R.Posicao.Linha, R.Posicao.Coluna])
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public void DesfazMovimento(Posicao origem, Posicao destino, Peca pecaCapturada)
+        {
+            Peca p = Taboleiro.RemoverPeca(destino);
+            p.DecrementarMovimento();
+            if (pecaCapturada != null)
+            {
+                Taboleiro.ColocarPeca(pecaCapturada, destino);
+                _pecasCapturadas.Remove(pecaCapturada);
+            }
+            Taboleiro.ColocarPeca(p, origem);
+
         }
 
         public void RealizaJogada(Posicao origem, Posicao destino)
         {
-            ExecutarMovimento(origem, destino);
+            Peca pecaCapturada = ExecutarMovimento(origem, destino);
+
+            if (EstaEmXeque(JogadorActual))
+            {
+                DesfazMovimento(origem, destino, pecaCapturada);
+                throw new TaboleiroExcepton("Voce não pode se colocar em xeque! ");
+            }
+            if (EstaEmXeque(Adversaria(JogadorActual)))
+            {
+                Xeque = true;
+            }
+            else
+            {
+                Xeque = false; 
+            }
             Turno++;
-            MudaJogador(); 
+            MudaJogador();
 
         }
 
         public void ValidarPosicaoOrigem(Posicao pos)
         {
-            if(Taboleiro.TabuleiroJogo(pos)== null)
+            if (Taboleiro.TabuleiroJogo(pos) == null)
             {
-                throw new TaboleiroExcepton("Não existe peça na posição origem escolhida!"); 
+                throw new TaboleiroExcepton("Não existe peça na posição origem escolhida!");
             }
-            if(JogadorActual != Taboleiro.TabuleiroJogo(pos).Cor)
+            if (JogadorActual != Taboleiro.TabuleiroJogo(pos).Cor)
             {
-                throw new TaboleiroExcepton("A peça de Origem escolhida não é tua!"); 
+                throw new TaboleiroExcepton("A peça de Origem escolhida não é tua!");
             }
             if (!Taboleiro.TabuleiroJogo(pos).ExisteMovimetosPossiveis(pos))
             {
-                throw new TaboleiroExcepton("Não há movimentos possivies para a peça de origem escolhida!"); 
+                throw new TaboleiroExcepton("Não há movimentos possivies para a peça de origem escolhida!");
             }
         }
 
@@ -122,19 +200,19 @@ namespace XadresConsole.Xadres
         {
             if (!Taboleiro.TabuleiroJogo(origem).PodeMoverPara(destino))
             {
-                throw new TaboleiroExcepton("Posição Invalida!"); 
+                throw new TaboleiroExcepton("Posição Invalida!");
             }
         }
 
         private void MudaJogador()
         {
-            if(JogadorActual == Cor.Branca)
+            if (JogadorActual == Cor.Branca)
             {
                 JogadorActual = Cor.Preta;
             }
             else
             {
-                JogadorActual = Cor.Branca; 
+                JogadorActual = Cor.Branca;
             }
         }
     }

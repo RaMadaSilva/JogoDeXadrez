@@ -23,6 +23,10 @@ namespace XadresConsole.Mesa
             QtdMoviemento++; 
         }
 
+        public void DecrementarMovimento()
+        {
+            QtdMoviemento--;
+        }
 
         public bool PodeMover(Posicao pos)
         {
