@@ -204,7 +204,7 @@ namespace XadresConsole.Xadres
 
         public void ValidarPosicaoDestino(Posicao origem, Posicao destino)
         {
-            if (!Taboleiro.TabuleiroJogo(origem).PodeMoverPara(destino))
+            if (!Taboleiro.TabuleiroJogo(origem).MovimentoPossivel(destino))
             {
                 throw new TaboleiroExcepton("Posição Invalida!");
             }
