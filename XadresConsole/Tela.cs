@@ -15,14 +15,24 @@ namespace XadresConsole
             Tela.ImprimirTaboleiro(partida.Taboleiro);
             Console.WriteLine();
 
-            ImprimirPecasCapturadas(partida); 
+            ImprimirPecasCapturadas(partida);
 
             Console.WriteLine("Turno: " + partida.Turno);
-            Console.WriteLine("Aguardando Jogada: " + partida.JogadorActual);
 
-            if (partida.Xeque)
+            if (!partida.Terminada)
             {
-                Console.WriteLine("XEQUE !");
+
+                Console.WriteLine("Aguardando Jogada: " + partida.JogadorActual);
+
+                if (partida.Xeque)
+                {
+                    Console.WriteLine("XEQUE !");
+                }
+            }
+            else
+            {
+                Console.WriteLine("XEQUEMATE! ");
+                Console.WriteLine("Vencedor: " + partida.JogadorActual);
             }
         }
 
@@ -35,9 +45,9 @@ namespace XadresConsole
 
             Console.Write("Pretas: ");
             ConsoleColor color = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Yellow; 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             ImprimirConjunto(partida.PecasCapturadas(Cor.Preta));
-            Console.ForegroundColor = color; 
+            Console.ForegroundColor = color;
             Console.WriteLine();
             Console.WriteLine();
 
@@ -45,15 +55,15 @@ namespace XadresConsole
 
         private static void ImprimirConjunto(HashSet<Peca> pecas)
         {
- 
+
             Console.Write("[ ");
-            foreach(var capturada in pecas)
+            foreach (var capturada in pecas)
             {
 
-            Console.Write(capturada + " ");
+                Console.Write(capturada + " ");
             }
             Console.Write(" ]");
-            
+
         }
 
         public static void ImprimirTaboleiro(Taboleiro taboleiro)
@@ -64,7 +74,7 @@ namespace XadresConsole
                 for (int j = 0; j < taboleiro.Colunas; j++)
                 {
 
-                        ImprimirPeca(taboleiro.TabuleiroJogo(i, j));
+                    ImprimirPeca(taboleiro.TabuleiroJogo(i, j));
 
                 }
                 Console.WriteLine();
@@ -75,23 +85,23 @@ namespace XadresConsole
         public static void ImprimirTaboleiro(Taboleiro taboleiro, bool[,] movimentosPossiveis)
         {
             ConsoleColor fundoOriginal = Console.BackgroundColor;
-            ConsoleColor fundoAlterada = ConsoleColor.DarkGray; 
+            ConsoleColor fundoAlterada = ConsoleColor.DarkGray;
 
             for (int i = 0; i < taboleiro.Linhas; i++)
             {
                 Console.Write(8 - i + " ");
                 for (int j = 0; j < taboleiro.Colunas; j++)
                 {
-                    if(movimentosPossiveis[i,j]== true)
+                    if (movimentosPossiveis[i, j] == true)
                     {
                         Console.BackgroundColor = fundoAlterada;
                     }
                     else
                     {
-                        Console.BackgroundColor = fundoOriginal; 
+                        Console.BackgroundColor = fundoOriginal;
                     }
                     ImprimirPeca(taboleiro.TabuleiroJogo(i, j));
-                    Console.BackgroundColor = fundoOriginal; 
+                    Console.BackgroundColor = fundoOriginal;
 
                 }
                 Console.WriteLine();

@@ -175,6 +175,12 @@ namespace XadresConsole.Xadres
             {
                 Xeque = false; 
             }
+
+            if (TesteXequeMate(Adversaria(JogadorActual)))
+            {
+                Terminada = true; 
+            }
+
             Turno++;
             MudaJogador();
 
@@ -202,6 +208,39 @@ namespace XadresConsole.Xadres
             {
                 throw new TaboleiroExcepton("Posição Invalida!");
             }
+        }
+
+        public bool TesteXequeMate(Cor cor)
+        {
+            if (!EstaEmXeque(cor))
+            {
+                return false; 
+            }
+            foreach(Peca p in PecasEmJogo(cor))
+            {
+                bool[,] mat = p.MovimentosPossiveis(); 
+                for(int i=0; i<Taboleiro.Linhas; i++)
+                {
+                    for(int j=0; j<Taboleiro.Colunas; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Posicao origem = p.Posicao; 
+                            Posicao destino = new Posicao(i, j);
+                            Peca pecaCapturada = ExecutarMovimento(origem, destino);
+                            bool testeXeque = EstaEmXeque(cor);
+                            DesfazMovimento(origem, destino, pecaCapturada);
+                            if (!testeXeque)
+                            {
+                                return false; 
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            return true; 
         }
 
         private void MudaJogador()
