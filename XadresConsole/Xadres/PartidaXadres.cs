@@ -72,7 +72,7 @@ namespace XadresConsole.Xadres
             ColocarNovaPeca('b', 1, new Cavalo(Cor.Branca, Taboleiro));
             ColocarNovaPeca('c', 1, new Bispo(Cor.Branca, Taboleiro));
             ColocarNovaPeca('d', 1, new Dama(Cor.Branca, Taboleiro));
-            ColocarNovaPeca('e', 1, new Rei(Cor.Branca, Taboleiro));
+            ColocarNovaPeca('e', 1, new Rei(Cor.Branca, Taboleiro, this));
             ColocarNovaPeca('f', 1, new Bispo(Cor.Branca, Taboleiro));
             ColocarNovaPeca('g', 1, new Cavalo(Cor.Branca, Taboleiro));
             ColocarNovaPeca('h', 1, new Torre(Cor.Branca, Taboleiro));
@@ -89,7 +89,7 @@ namespace XadresConsole.Xadres
             ColocarNovaPeca('b', 8, new Cavalo(Cor.Preta, Taboleiro));
             ColocarNovaPeca('c', 8, new Bispo(Cor.Preta, Taboleiro));
             ColocarNovaPeca('d', 8, new Dama(Cor.Preta, Taboleiro));
-            ColocarNovaPeca('e', 8, new Rei(Cor.Preta, Taboleiro));
+            ColocarNovaPeca('e', 8, new Rei(Cor.Preta, Taboleiro, this));
             ColocarNovaPeca('f', 8, new Bispo(Cor.Preta, Taboleiro));
             ColocarNovaPeca('g', 8, new Cavalo(Cor.Preta, Taboleiro));
             ColocarNovaPeca('h', 8, new Torre(Cor.Preta, Taboleiro));
@@ -113,6 +113,29 @@ namespace XadresConsole.Xadres
             if (pecaCapturada != null)
             {
                 _pecasCapturadas.Add(pecaCapturada);
+            }
+
+            //#Jogada Especial Roque Pequeno
+            if(peca is Rei && destino.Coluna ==origem.Coluna + 2)
+            {
+                Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna + 3);
+                Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna + 1);
+
+                Peca T = Taboleiro.RemoverPeca(origemTorre);
+                T.IncrementarMovimento();
+                Taboleiro.ColocarPeca(T, destinoTorre); 
+            }
+
+
+            //#Jogada Especial Roque Grande
+            if (peca is Rei && destino.Coluna == origem.Coluna - 2)
+            {
+                Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna - 4);
+                Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna - 1);
+
+                Peca T = Taboleiro.RemoverPeca(origemTorre);
+                T.IncrementarMovimento();
+                Taboleiro.ColocarPeca(T, destinoTorre);
             }
 
             return pecaCapturada;
@@ -175,6 +198,28 @@ namespace XadresConsole.Xadres
             }
             Taboleiro.ColocarPeca(p, origem);
 
+            //#Jogada Especial Roque Pequeno
+            if (p is Rei && destino.Coluna == origem.Coluna + 2)
+            {
+                Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna + 3);
+                Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna + 1);
+
+                Peca T = Taboleiro.RemoverPeca(destinoTorre);
+                T.DecrementarMovimento();
+                Taboleiro.ColocarPeca(T, origemTorre);
+            }
+
+            //#Jogada Especial Roque Pequeno
+            if (p is Rei && destino.Coluna == origem.Coluna + 2)
+            {
+                Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna - 4);
+                Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna - 1);
+
+                Peca T = Taboleiro.RemoverPeca(destinoTorre);
+                T.IncrementarMovimento();
+                Taboleiro.ColocarPeca(T, origemTorre);
+
+            }
         }
 
         public void RealizaJogada(Posicao origem, Posicao destino)

@@ -6,9 +6,16 @@ namespace XadresConsole.Xadres
 {
     class Rei : Peca
     {
-        public Rei(Cor cor, Taboleiro taboleiro) : base(cor, taboleiro)
+        private PartidaXadres _partida; 
+        public Rei(Cor cor, Taboleiro taboleiro, PartidaXadres partida) : base(cor, taboleiro)
         {
+            _partida = partida; 
+        }
 
+        private bool TesteTorreParaRoque(Posicao pos)
+        {
+            Peca p = Taboleiro.TabuleiroJogo(pos);
+            return p != null && p is Torre && p.Cor == Cor & p.QtdMoviemento == 0; 
         }
 
         public override bool[,] MovimentosPossiveis()
@@ -87,6 +94,37 @@ namespace XadresConsole.Xadres
             if (Taboleiro.PosicaoValida(pos) && PodeMover(pos))
             {
                 movimentosPossiveisRei[pos.Linha, pos.Coluna] = true;
+            }
+
+            //#Jogada Especial roque
+            if(QtdMoviemento ==0 && !_partida.Xeque)
+            {
+                //Jogada Especial Roque Pequeno 
+                Posicao posicaoTorre1 = new Posicao(Posicao.Linha, Posicao.Coluna + 3);
+                if (TesteTorreParaRoque(posicaoTorre1))
+                {
+                    Posicao p1 = new Posicao(Posicao.Linha, Posicao.Coluna + 1);
+                    Posicao p2 = new Posicao(Posicao.Linha, Posicao.Coluna + 2); 
+                    if(Taboleiro.TabuleiroJogo(p1)==null && Taboleiro.TabuleiroJogo(p2) == null)
+                    {
+                        movimentosPossiveisRei[Posicao.Linha, Posicao.Coluna + 2] = true; 
+                    }
+                }
+
+                //Jogada Especial Roque Grande 
+                Posicao posicaoTorre2 = new Posicao(Posicao.Linha, Posicao.Coluna -4);
+                if (TesteTorreParaRoque(posicaoTorre1))
+                {
+                    Posicao p1 = new Posicao(Posicao.Linha, Posicao.Coluna - 1);
+                    Posicao p2 = new Posicao(Posicao.Linha, Posicao.Coluna - 2);
+                    Posicao p3 = new Posicao(Posicao.Linha, Posicao.Coluna -3);
+                    if (Taboleiro.TabuleiroJogo(p1) == null && Taboleiro.TabuleiroJogo(p2) == null && Taboleiro.TabuleiroJogo(p3) == null)
+                    {
+                        movimentosPossiveisRei[Posicao.Linha, Posicao.Coluna - 2] = true;
+                    }
+                }
+
+
             }
 
             return movimentosPossiveisRei;
