@@ -68,20 +68,39 @@ namespace XadresConsole.Xadres
         private void ColocarPeca()
         {
 
-            ColocarNovaPeca('c', 1, new Torre(Cor.Branca, Taboleiro));
-            ColocarNovaPeca('c', 2, new Torre(Cor.Branca, Taboleiro));
-            ColocarNovaPeca('d', 2, new Torre(Cor.Branca, Taboleiro));
-            ColocarNovaPeca('e', 2, new Torre(Cor.Branca, Taboleiro));
-            ColocarNovaPeca('e', 1, new Torre(Cor.Branca, Taboleiro));
-            ColocarNovaPeca('d', 1, new Rei(Cor.Branca, Taboleiro));
+            ColocarNovaPeca('a', 1, new Torre(Cor.Branca, Taboleiro));
+            ColocarNovaPeca('b', 1, new Cavalo(Cor.Branca, Taboleiro));
+            ColocarNovaPeca('c', 1, new Bispo(Cor.Branca, Taboleiro));
+            ColocarNovaPeca('d', 1, new Dama(Cor.Branca, Taboleiro));
+            ColocarNovaPeca('e', 1, new Rei(Cor.Branca, Taboleiro));
+            ColocarNovaPeca('f', 1, new Bispo(Cor.Branca, Taboleiro));
+            ColocarNovaPeca('g', 1, new Cavalo(Cor.Branca, Taboleiro));
+            ColocarNovaPeca('h', 1, new Torre(Cor.Branca, Taboleiro));
+            ColocarNovaPeca('a', 2, new Peao(Cor.Branca, Taboleiro, this));
+            ColocarNovaPeca('b', 2, new Peao(Cor.Branca, Taboleiro, this));
+            ColocarNovaPeca('c', 2, new Peao(Cor.Branca, Taboleiro, this));
+            ColocarNovaPeca('d', 2, new Peao(Cor.Branca, Taboleiro, this));
+            ColocarNovaPeca('e', 2, new Peao(Cor.Branca, Taboleiro, this));
+            ColocarNovaPeca('f', 2, new Peao(Cor.Branca, Taboleiro, this));
+            ColocarNovaPeca('g', 2, new Peao(Cor.Branca, Taboleiro, this));
+            ColocarNovaPeca('h', 2, new Peao(Cor.Branca, Taboleiro, this));
 
-            ColocarNovaPeca('c', 7, new Torre(Cor.Preta, Taboleiro));
-            ColocarNovaPeca('c', 8, new Torre(Cor.Preta, Taboleiro));
-            ColocarNovaPeca('d', 7, new Torre(Cor.Preta, Taboleiro));
-            ColocarNovaPeca('e', 7, new Torre(Cor.Preta, Taboleiro));
-            ColocarNovaPeca('e', 8, new Torre(Cor.Preta, Taboleiro));
-            ColocarNovaPeca('d', 8, new Rei(Cor.Preta, Taboleiro));
-
+            ColocarNovaPeca('a', 8, new Torre(Cor.Preta, Taboleiro));
+            ColocarNovaPeca('b', 8, new Cavalo(Cor.Preta, Taboleiro));
+            ColocarNovaPeca('c', 8, new Bispo(Cor.Preta, Taboleiro));
+            ColocarNovaPeca('d', 8, new Dama(Cor.Preta, Taboleiro));
+            ColocarNovaPeca('e', 8, new Rei(Cor.Preta, Taboleiro));
+            ColocarNovaPeca('f', 8, new Bispo(Cor.Preta, Taboleiro));
+            ColocarNovaPeca('g', 8, new Cavalo(Cor.Preta, Taboleiro));
+            ColocarNovaPeca('h', 8, new Torre(Cor.Preta, Taboleiro));
+            ColocarNovaPeca('a', 7, new Peao(Cor.Preta, Taboleiro, this));
+            ColocarNovaPeca('b', 7, new Peao(Cor.Preta, Taboleiro, this));
+            ColocarNovaPeca('c', 7, new Peao(Cor.Preta, Taboleiro, this));
+            ColocarNovaPeca('d', 7, new Peao(Cor.Preta, Taboleiro, this));
+            ColocarNovaPeca('e', 7, new Peao(Cor.Preta, Taboleiro, this));
+            ColocarNovaPeca('f', 7, new Peao(Cor.Preta, Taboleiro, this));
+            ColocarNovaPeca('g', 7, new Peao(Cor.Preta, Taboleiro, this));
+            ColocarNovaPeca('h', 7, new Peao(Cor.Preta, Taboleiro, this));
         }
 
         public Peca ExecutarMovimento(Posicao origem, Posicao destino)
