@@ -16,6 +16,7 @@ namespace XadresConsole.Xadres
 
         private HashSet<Peca> _pecas;
         private HashSet<Peca> _pecasCapturadas;
+        public Peca VulneraravelEnPassant { get; private set; }
 
         public PartidaXadres()
         {
@@ -24,6 +25,7 @@ namespace XadresConsole.Xadres
             JogadorActual = Cor.Branca;
             _pecas = new HashSet<Peca>();
             _pecasCapturadas = new HashSet<Peca>();
+            VulneraravelEnPassant = null;
 
             ColocarPeca();
             Terminada = false;
@@ -116,14 +118,15 @@ namespace XadresConsole.Xadres
             }
 
             //#Jogada Especial Roque Pequeno
-            if(peca is Rei && destino.Coluna ==origem.Coluna + 2)
+
+            if (peca is Rei && destino.Coluna == origem.Coluna + 2)
             {
                 Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna + 3);
                 Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna + 1);
 
                 Peca T = Taboleiro.RemoverPeca(origemTorre);
                 T.IncrementarMovimento();
-                Taboleiro.ColocarPeca(T, destinoTorre); 
+                Taboleiro.ColocarPeca(T, destinoTorre);
             }
 
 
@@ -137,6 +140,28 @@ namespace XadresConsole.Xadres
                 T.IncrementarMovimento();
                 Taboleiro.ColocarPeca(T, destinoTorre);
             }
+
+            //#Jogada Especial en Passant
+            if(peca is Peao)
+            {
+                if(origem.Coluna != destino.Coluna && pecaCapturada == null)
+                {
+                    Posicao PosPeao; 
+                    if(peca.Cor == Cor.Branca)
+                    {
+                        PosPeao = new Posicao(destino.Linha + 1, destino.Coluna);
+                    }
+                    else
+                    {
+                        PosPeao = new Posicao(destino.Linha - 1, destino.Coluna); 
+                    }
+
+                    pecaCapturada = Taboleiro.TabuleiroJogo(PosPeao);
+                    _pecasCapturadas.Add(pecaCapturada); 
+                }
+            }
+
+
 
             return pecaCapturada;
         }
@@ -220,6 +245,27 @@ namespace XadresConsole.Xadres
                 Taboleiro.ColocarPeca(T, origemTorre);
 
             }
+
+            //#Jogada Especial en Passant
+
+            if(p is Peao)
+            {
+                if(origem.Coluna != destino.Coluna && pecaCapturada == VulneraravelEnPassant)
+                {
+                    Peca peao = Taboleiro.RemoverPeca(destino);
+                    Posicao posPeao; 
+                    if(p.Cor == Cor.Branca)
+                    {
+                        posPeao = new Posicao(3, destino.Coluna);
+                    }
+                    else
+                    {
+                        posPeao = new Posicao(4, destino.Coluna); 
+                    }
+                    Taboleiro.ColocarPeca(peao, posPeao); 
+                }
+            }
+
         }
 
         public void RealizaJogada(Posicao origem, Posicao destino)
@@ -237,16 +283,33 @@ namespace XadresConsole.Xadres
             }
             else
             {
-                Xeque = false; 
+                Xeque = false;
             }
 
             if (TesteXequeMate(Adversaria(JogadorActual)))
             {
-                Terminada = true; 
+                Terminada = true;
+            }
+            else
+            {
+
+                Turno++;
+                MudaJogador();
+
             }
 
-            Turno++;
-            MudaJogador();
+            Peca p = Taboleiro.TabuleiroJogo(destino);
+
+            //#Jogada Especial en Passant
+
+            if (p is Peao && (destino.Linha == origem.Linha - 2 || destino.Linha == destino.Linha + 2))
+            {
+                VulneraravelEnPassant = p;
+            }
+            else
+            {
+                VulneraravelEnPassant = null;
+            }
 
         }
 
@@ -278,25 +341,25 @@ namespace XadresConsole.Xadres
         {
             if (!EstaEmXeque(cor))
             {
-                return false; 
+                return false;
             }
-            foreach(Peca p in PecasEmJogo(cor))
+            foreach (Peca p in PecasEmJogo(cor))
             {
-                bool[,] mat = p.MovimentosPossiveis(); 
-                for(int i=0; i<Taboleiro.Linhas; i++)
+                bool[,] mat = p.MovimentosPossiveis();
+                for (int i = 0; i < Taboleiro.Linhas; i++)
                 {
-                    for(int j=0; j<Taboleiro.Colunas; j++)
+                    for (int j = 0; j < Taboleiro.Colunas; j++)
                     {
                         if (mat[i, j])
                         {
-                            Posicao origem = p.Posicao; 
+                            Posicao origem = p.Posicao;
                             Posicao destino = new Posicao(i, j);
                             Peca pecaCapturada = ExecutarMovimento(origem, destino);
                             bool testeXeque = EstaEmXeque(cor);
                             DesfazMovimento(origem, destino, pecaCapturada);
                             if (!testeXeque)
                             {
-                                return false; 
+                                return false;
                             }
                         }
                     }
@@ -304,7 +367,7 @@ namespace XadresConsole.Xadres
 
             }
 
-            return true; 
+            return true;
         }
 
         private void MudaJogador()

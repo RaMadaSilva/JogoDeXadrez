@@ -57,6 +57,26 @@ namespace XadresConsole.Xadres
                     mat[pos.Linha, pos.Coluna] = true;
                 }
 
+                //#Jogada Especial en passant
+
+                if(Posicao.Linha == 3)
+                {
+                    Posicao esquerda = new Posicao(Posicao.Linha, Posicao.Coluna - 1); 
+                    if(Taboleiro.PosicaoValida(esquerda)&& ExisteInimigo(esquerda) && Taboleiro.TabuleiroJogo(esquerda) == _Partida.VulneraravelEnPassant)
+                    {
+                        mat[esquerda.Linha -1, esquerda.Coluna] = true; 
+                    }
+                }
+
+                if (Posicao.Linha == 3)
+                {
+                    Posicao direita = new Posicao(Posicao.Linha, Posicao.Coluna + 1);
+                    if (Taboleiro.PosicaoValida(direita) && ExisteInimigo(direita) && Taboleiro.TabuleiroJogo(direita) == _Partida.VulneraravelEnPassant)
+                    {
+                        mat[direita.Linha -1 , direita.Coluna] = true;
+                    }
+                }
+
             }
             else
             {
@@ -80,6 +100,26 @@ namespace XadresConsole.Xadres
                 if (Taboleiro.PosicaoValida(pos) && ExisteInimigo(pos))
                 {
                     mat[pos.Linha, pos.Coluna] = true;
+                }
+
+                //#Jogada Especial en passant
+
+                if (Posicao.Linha == 4)
+                {
+                    Posicao esquerda = new Posicao(Posicao.Linha, Posicao.Coluna - 1);
+                    if (Taboleiro.PosicaoValida(esquerda) && ExisteInimigo(esquerda) && Taboleiro.TabuleiroJogo(esquerda) == _Partida.VulneraravelEnPassant)
+                    {
+                        mat[esquerda.Linha + 1, esquerda.Coluna] = true;
+                    }
+                }
+
+                if (Posicao.Linha == 4)
+                {
+                    Posicao direita = new Posicao(Posicao.Linha, Posicao.Coluna + 1);
+                    if (Taboleiro.PosicaoValida(direita) && ExisteInimigo(direita) && Taboleiro.TabuleiroJogo(direita) == _Partida.VulneraravelEnPassant)
+                    {
+                        mat[direita.Linha + 1, direita.Coluna] = true;
+                    }
                 }
             }
 
